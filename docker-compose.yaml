@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:alpine3.18
+    restart: on-failure
+    environment:
+      POSTGRES_DB: "playlist"
+      POSTGRES_USER: "gocloud"
+      POSTGRES_PASSWORD: "gocloud"
+      PGDATA: "/data/pgdata"  # Здесь должен быть правильный хост (имя сервиса)
+    volumes:
+      - ./sql_scripts:/docker-entrypoint-initdb.d
+      - ./data:/data
+    ports:
+      - "5432:5432"
+
+networks:
+  local:
+    driver: bridge
